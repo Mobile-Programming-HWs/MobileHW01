@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Terminator</string>
+    <string name="course_name">Course Name</string>
+    <string name="course_instructor">Course Instructor</string>
+</resources>
