@@ -145,13 +145,12 @@ public class CourseListFragment extends Fragment implements SelectListener {
 
     @Override
     public void onItemClicked(Course course) {
-        //TODO: Convert "class_times" attribute from json format to human-readable format
         String message = String.format("%s" + '\n' +
                         "واحد: " + "%d" + '\n' +
                         "ظرفیت: " + "%d" + '\n' +
-                        "زمان برگزاری: " + "%s" + '\n' +
+                        "زمان برگزاری: " + "%s" + " تا " + "%s" + '\n' +
                         "زمان امتحان: " + "%s",
-                course.getInfo(), course.getUnits(), course.getCapacity(), course.getClass_times(), course.getExam_time());
+                course.getInfo(), course.getUnits(), course.getCapacity(), course.getClassTimeBeginning().toString(), course.getClassTimeEnding().toString(), course.getExam_time());
         new AlertDialog.Builder(getContext(), R.style.AlertDialogCustom)
                 .setTitle(course.getName())
                 .setMessage(message)
