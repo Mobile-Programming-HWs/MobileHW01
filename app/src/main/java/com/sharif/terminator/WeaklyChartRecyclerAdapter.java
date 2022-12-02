@@ -34,7 +34,7 @@ public class WeaklyChartRecyclerAdapter extends RecyclerView.Adapter<WeaklyChart
         holder.weaklyChartName.setText(course.getName());
         holder.weaklyChartInstructor.setText(course.getInstructor());
         holder.weaklyChartHour.setText(course.getClassTimeBeginning().toString() + " تا " + course.getClassTimeEnding().toString());
-        holder.weaklyChartDate.setText(Integer.toString(course.getClassFirstDate()));
+        holder.weaklyChartDate.setText(Integer.toString(course.getClassDate()));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

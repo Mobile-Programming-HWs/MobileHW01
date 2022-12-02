@@ -18,6 +18,7 @@ public class Course {
     private final float classTimeEnding;
     private final int classFirstDate;
     private final int classSecondDate;
+    private int datePriority;
 
     public Course(String info, String course_id, String course_number, String name, int units, int capacity, String instructor, String class_times, int id, String exam_time) {
         this.info = info;
@@ -30,6 +31,7 @@ public class Course {
         this.class_times = class_times;
         this.id = id;
         this.exam_time = exam_time;
+        this.datePriority = 1;
 
         Pattern pattern = Pattern.compile("\\[\\{\"start\": ([0-9.]+), \"end\": ([0-9.]+), \"day\": ([0-9])\\}, \\{\"start\": [0-9.]+, \"end\": [0-9.]+, \"day\": ([0-9])\\}\\]");
         Matcher matcher = pattern.matcher(class_times);
@@ -100,5 +102,20 @@ public class Course {
 
     public int getClassSecondDate() {
         return classSecondDate;
+    }
+
+    public void setDatePriority(int datePriority) {
+        this.datePriority = datePriority;
+    }
+
+    public int getClassDate() {
+        if (datePriority == 1) {
+            return classFirstDate;
+        }
+        return classSecondDate;
+    }
+    
+    public static Course getClone(Course course) {
+        return new Course(course.info, course.course_id, course.course_number, course.name, course.units, course.capacity, course.instructor, course.class_times, course.id, course.exam_time);
     }
 }

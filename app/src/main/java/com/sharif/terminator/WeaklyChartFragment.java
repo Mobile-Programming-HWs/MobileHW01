@@ -26,7 +26,7 @@ public class WeaklyChartFragment extends Fragment {
         weaklyChartView = weaklyLayout.findViewById(R.id.weakly_chart_view);
 
         ArrayList<Course> selectedCourseTimes = new ArrayList<>();
-        selectedCourseTimes = Department.getCourses();
+        selectedCourseTimes = SelectedCourse.getSelectedCourses();
 
         WeaklyChartRecyclerAdapter adapter = new WeaklyChartRecyclerAdapter();
         adapter.setSelectedCoursesTimes(selectedCourseTimes);

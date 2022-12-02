@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -76,7 +77,11 @@ public class CourseListFragment extends Fragment implements SelectListener {
                 .setTitle(course.getName())
                 .setMessage(message)
                 .setPositiveButton("اضافه کن", (dialogInterface, i) -> {
-                    //TODO
+                   if (SelectedCourse.addSelectedCourse(course)) {
+                       Toast.makeText(getContext(), "درس موردنظر با موفقیت اضافه شد", Toast.LENGTH_SHORT).show();
+                   } else {
+                       Toast.makeText(getContext(), "درس موردنظر با دروس برنامه در تداخل است", Toast.LENGTH_SHORT).show();
+                   }
                 })
                 .setNegativeButton("لغو", null)
                 .show();
