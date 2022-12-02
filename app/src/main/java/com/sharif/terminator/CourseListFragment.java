@@ -2,7 +2,6 @@ package com.sharif.terminator;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,21 +16,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class CourseListFragment extends Fragment implements SelectListener {
     private int chosenDepartment = 0;
     private RecyclerView recyclerView;
-    private ArrayList<Department> departments = new ArrayList<>();
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private LinearLayoutCompat layoutCompat;
@@ -39,8 +28,6 @@ public class CourseListFragment extends Fragment implements SelectListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        initializeDepartments();
-        addItemsFromJSON();
         layoutCompat = (LinearLayoutCompat) inflater.inflate(R.layout.fragment_course_list, container, false);
         recyclerView = layoutCompat.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -52,7 +39,7 @@ public class CourseListFragment extends Fragment implements SelectListener {
     }
 
     private void updateAdapter() {
-        adapter = new RecyclerAdapter(getContext(), departments.get(chosenDepartment).getCourses(), this);
+        adapter = new RecyclerAdapter(getContext(), MainActivity.departments.get(chosenDepartment).getCourses(), this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -75,72 +62,6 @@ public class CourseListFragment extends Fragment implements SelectListener {
 
             }
         });
-    }
-
-
-    private void initializeDepartments() {
-        departments.add(new Department(R.raw.d3, "دانشکده ریاضی"));
-        departments.add(new Department(R.raw.d5, "دانشکده فیزیک"));
-        departments.add(new Department(R.raw.d38, "دانشکده کامپیوتر"));
-    }
-
-
-    private void addItemsFromJSON() {
-        try {
-
-            for (int j = 0; j < departments.size(); j++) {
-                Department department = departments.get(j);
-                String jsonDataString = readJSONDataFromFile(department.getFile_name());
-                JSONArray jsonArray = new JSONArray(jsonDataString);
-
-                for (int i = 0; i < jsonArray.length(); ++i) {
-                    JSONObject itemObj = jsonArray.getJSONObject(i);
-
-                    String info = itemObj.getString("info");
-                    String course_id = itemObj.getString("course_id");
-                    String course_number = itemObj.getString("course_number");
-                    String name = itemObj.getString("name");
-                    int units = itemObj.getInt("units");
-                    int capacity = itemObj.getInt("capacity");
-                    String instructor = itemObj.getString("instructor");
-                    String class_times = itemObj.getString("class_times");
-                    int id = itemObj.getInt("id");
-                    String exam_time = itemObj.getString("exam_time");
-
-                    Course course = new Course(info, course_id, course_number, name, units, capacity, instructor, class_times, id, exam_time);
-                    department.addCourse(course);
-                }
-
-            }
-
-        } catch (JSONException | IOException e) {
-            Log.d("MainActivity", "addItemsFromJSON: ", e);
-        }
-    }
-
-
-    private String readJSONDataFromFile(int resourceName) throws IOException {
-
-        InputStream inputStream = null;
-        StringBuilder builder = new StringBuilder();
-
-        try {
-
-            String jsonString;
-            inputStream = getResources().openRawResource(resourceName);
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-
-            while ((jsonString = bufferedReader.readLine()) != null) {
-                builder.append(jsonString);
-            }
-
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-        }
-        return new String(builder);
     }
 
     @Override
