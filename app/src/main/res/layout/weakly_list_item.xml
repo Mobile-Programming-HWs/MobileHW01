@@ -19,6 +19,7 @@
             android:id="@+id/weakly_chart_date"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:padding="5dp"
             android:text="Day of the weak"
             android:textAlignment="center" />
@@ -27,6 +28,7 @@
             android:id="@+id/weakly_chart_hour"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:padding="5dp"
             android:text="11:00 to 12:30"
             android:textAlignment="center" />

@@ -28,13 +28,27 @@ public class WeaklyChartRecyclerAdapter extends RecyclerView.Adapter<WeaklyChart
         return holder;
     }
 
+    public String dateCalculator(int date) {
+        switch (date) {
+            case -1: return "نامشخص";
+            case 0: return "شنبه";
+            case 1: return "یکشنبه";
+            case 2: return "دوشنبه";
+            case 3: return "سه شنبه";
+            case 4: return "چهارشنبه";
+            case 5: return "پنج شنبه";
+            case 6: return "جمعه";
+            default: return "";
+        }
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Course course = selectedCoursesTimes.get(position);
         holder.weaklyChartName.setText(course.getName());
         holder.weaklyChartInstructor.setText(course.getInstructor());
         holder.weaklyChartHour.setText(course.getClassTimeBeginning().toString() + " تا " + course.getClassTimeEnding().toString());
-        holder.weaklyChartDate.setText(Integer.toString(course.getClassDate()));
+        holder.weaklyChartDate.setText(dateCalculator(course.getClassDate()));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,7 +61,14 @@ public class WeaklyChartRecyclerAdapter extends RecyclerView.Adapter<WeaklyChart
                 new AlertDialog.Builder(view.getContext(), R.style.AlertDialogCustom)
                         .setTitle(course.getName())
                         .setMessage(message)
-                        .setNegativeButton("حذف", null)
+                        .setNegativeButton("حذف", (dialogInterface, i) -> {
+                            for (int j = selectedCoursesTimes.size() - 1; j >= 0; j--) {
+                                if (course.getId() == selectedCoursesTimes.get(j).getId()) {
+                                    selectedCoursesTimes.remove(j);
+                                }
+                            }
+                            notifyDataSetChanged();
+                        })
                         .show();
             }
         });

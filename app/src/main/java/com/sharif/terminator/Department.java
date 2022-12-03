@@ -7,7 +7,7 @@ public class Department {
 
     private final int file_name;
     private final String department_name;
-    private static ArrayList<Course> courses = new ArrayList<>();
+    private ArrayList<Course> courses = new ArrayList<>();
 
     public int getFile_name() {
         return file_name;
@@ -17,7 +17,7 @@ public class Department {
         return department_name;
     }
 
-    public static ArrayList<Course> getCourses() {
+    public ArrayList<Course> getCourses() {
         return courses;
     }
 
